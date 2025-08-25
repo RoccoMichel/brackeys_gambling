@@ -1136,6 +1136,7 @@ MonoBehaviour:
   canvas: {fileID: 597952082}
   OpponentList: []
   player: {fileID: 0}
+  snailRacePrefab: {fileID: 1030680464305265110, guid: 9a77ab13081841e4492914eb08b1cdd5, type: 3}
 --- !u!4 &1389134524
 Transform:
   m_ObjectHideFlags: 0

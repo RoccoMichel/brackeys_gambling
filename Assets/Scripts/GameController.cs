@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour
     public CanvasManager canvas;
     public List<Opponent> OpponentList = new();
     public Player player;
+
+    [SerializeField] private GameObject snailRacePrefab;
     private void Awake()
     {
         if(Instance != null) { Destroy(gameObject); }
@@ -42,6 +44,7 @@ public class GameController : MonoBehaviour
     public void StartRace()
     {
         canvas.ClearButtons();
+        Instantiate(snailRacePrefab);
     }
 
     public void GenerateOpponents(int count)
