@@ -42,5 +42,6 @@ public class SnailManager : MonoBehaviour
         winner = winSnail.GetDaNumbah();
         Debug.Log(winner + " won");
         GameController.Instance.RaceFinish(winner);
+        Destroy(this.transform.parent.gameObject);
     }
 }
