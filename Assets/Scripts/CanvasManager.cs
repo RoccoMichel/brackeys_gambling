@@ -9,16 +9,11 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private Transform buttonParent;
     [SerializeField] public Transform opponentParent;
     public Player player;
-    List<GameObject> Buttons = new();
+    public List<GameObject> Buttons = new();
 
-    private void Start()
+    private void Update()
     {
-        RefreshCanvas();
         betDisplay.text = $"Bet: ${player.bet}";
-    }
-
-    public void RefreshCanvas()
-    {
         balanceDisplay.text = $"${player.balance}";
     }
 
@@ -34,6 +29,7 @@ public class CanvasManager : MonoBehaviour
     public void ClearButtons()
     {
         foreach (GameObject gameObject in Buttons) { Destroy(gameObject); }
+        Buttons.Clear();
     }
 
     public void IncreaseBet()
@@ -50,6 +46,14 @@ public class CanvasManager : MonoBehaviour
         if (GameController.Instance.inRace) return;
 
         player.bet = Mathf.Clamp(player.bet -= 10, 1, player.balance);
+        betDisplay.text = $"Bet: ${player.bet}";
+    }
+
+    public void AllIn()
+    {
+        if (GameController.Instance.inRace) return;
+
+        player.bet = player.balance;
         betDisplay.text = $"Bet: ${player.bet}";
     }
 }

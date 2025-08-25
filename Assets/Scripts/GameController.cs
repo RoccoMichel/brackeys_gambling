@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        player.balance = 500;
         GenerateOpponents(4);
         NewRace();
     }
@@ -27,6 +28,7 @@ public class GameController : MonoBehaviour
     public void RaceFinish(int result)
     {
         inRace = false;
+
         foreach(Opponent o in OpponentList)
         {
             if (o.selection == result) o.Win();
@@ -34,8 +36,9 @@ public class GameController : MonoBehaviour
         }
 
         if (player.selection == result) player.Win();
+        else player.Lose();
 
-        canvas.RefreshCanvas();
+        NewRace();
     }
 
     public void NewRace()

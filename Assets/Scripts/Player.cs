@@ -12,13 +12,13 @@ public class Player : ScriptableObject
     public void Win()
     {
         balance += bet*2;
-        bet = 0;
+        bet = 1;
     }
 
     public void Lose()
     {
         balance -= bet;
-        bet = 0;
+        bet = 1;
 
         if (balance <= 0) SceneManager.LoadScene("GameOverScene");
     }

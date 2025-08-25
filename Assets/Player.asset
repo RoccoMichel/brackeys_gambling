@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: YOU
   balance: 500
-  bet: 0
-  selection: 0
+  bet: 1
+  selection: 3

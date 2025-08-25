@@ -10,13 +10,14 @@ public class Opponent : MonoBehaviour
 
     public void ChooseBet()
     {
-        selection = Random.Range(0, GameController.Instance.optionsCount + 1);
-        bet = Random.Range(0, balance / 10) * 10;
+        selection = Random.Range(1, GameController.Instance.optionsCount + 1);
+        bet = Random.Range(0, balance / 4);
     }
 
     private void Update()
     {
-        infoDisplay.text = $"{selection + 1} | ${balance}";
+        if (balance > 0) infoDisplay.text = $"{selection} | ${balance}";
+        else infoDisplay.text = "OUT";
     }
 
     public void Win()
