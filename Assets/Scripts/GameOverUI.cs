@@ -8,4 +8,9 @@ public class GameOverUI : MonoBehaviour
         int sceneToLoad = SceneManager.loadedSceneCount - 1;
         SceneManager.LoadScene(sceneToLoad);
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

@@ -1,25 +1,24 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[CreateAssetMenu(fileName = "Player", menuName = "Scriptable Objects/Player")]
-public class Player : ScriptableObject
+public class Player : MonoBehaviour
 {
-    public string playerName = "YOU";
+    public string playerName = "Gambling Addict";
     public int balance = 1000;
-    public int bet;
+    public int bet = 1;
     public int selection;
 
     public void Win()
     {
-        balance += bet*2;
-        bet = 1;
+        balance += bet * 2;
+        bet = Mathf.CeilToInt(balance / 2);
     }
 
     public void Lose()
     {
         balance -= bet;
-        bet = 1;
+        bet = Mathf.CeilToInt(balance / 2);
 
-        if (balance <= 0) SceneManager.LoadScene("GameOverScene");
+        if (balance <= 0) SceneManager.LoadScene("GameOver");
     }
 }

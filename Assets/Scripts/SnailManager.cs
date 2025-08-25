@@ -1,5 +1,3 @@
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SnailManager : MonoBehaviour
@@ -13,7 +11,6 @@ public class SnailManager : MonoBehaviour
     private void Start()
     {
         SetSpeed();
-
     }
     private void SetSpeed()
     {
@@ -21,7 +18,6 @@ public class SnailManager : MonoBehaviour
         {
             snail.SetSpeed(Random.Range(minSnailSpeed, maxSnailSpeed));
         }
-        StartRace();
     }
     private void StopRace()
     {
@@ -30,21 +26,27 @@ public class SnailManager : MonoBehaviour
             snail.HaltStop();
         }
     }
-    private void StartRace()
+    public void StartRace()
     {
+        finished = false;
         foreach(Snail snail in snails)
         {
             snail.StartMoving();
         }
+
+        GetComponent<AudioSource>().Play();
     }
+
+    bool finished;
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (finished) return;
+
+        finished = true;
         Snail winSnail = collision.GetComponent<Snail>();
         StopRace();
         winner = winSnail.GetDaNumbah();
-        GameObject text = Instantiate((GameObject)Resources.Load("Winner Text"), GameController.Instance.canvas.transform);
-        text.GetComponent<TMP_Text>().text = $"Snail {winner} WON!";
-        Destroy(text, 5);
+        Instantiate((GameObject)Resources.Load("Winner-Text"), GameController.Instance.canvas.transform).GetComponent<PopText>().SetValues($"Snail #{winner} WON!", 3f);
         GameController.Instance.RaceFinish(winner);
         Destroy(this.transform.parent.gameObject);
     }

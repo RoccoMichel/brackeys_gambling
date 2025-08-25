@@ -11,10 +11,12 @@ public class CanvasManager : MonoBehaviour
     public Player player;
     public List<GameObject> Buttons = new();
 
-    private void Update()
+    private void FixedUpdate()
     {
         betDisplay.text = $"Bet: ${player.bet}";
         balanceDisplay.text = $"${player.balance}";
+
+        balanceDisplay.color = Color.Lerp(balanceDisplay.color, Color.white, 0.03f);
     }
 
     public void GenerateButtons(int amount)
@@ -23,7 +25,13 @@ public class CanvasManager : MonoBehaviour
         {
             Buttons.Add(Instantiate((GameObject)Resources.Load("Bet Button"), buttonParent));
             Buttons[i - 1].GetComponent<BetButton>().selection = i;
+            Buttons[i - 1].GetComponent<BetButton>().message = $"Bet on Snail #{i}";
         }
+    }
+
+    public void SetBalanceColor(Color color)
+    {
+        balanceDisplay.color = color;
     }
 
     public void ClearButtons()
@@ -34,7 +42,7 @@ public class CanvasManager : MonoBehaviour
 
     public void IncreaseBet()
     {
-        if (GameController.Instance.inRace) return;
+        if (GameController.Instance.inGame) return;
 
         if (player.bet == 1) player.bet = 10;
         else player.bet = Mathf.Clamp(player.bet += 10, 1, player.balance);
@@ -43,15 +51,15 @@ public class CanvasManager : MonoBehaviour
 
     public void DecreaseBet()
     {
-        if (GameController.Instance.inRace) return;
+        if (GameController.Instance.inGame) return;
 
         player.bet = Mathf.Clamp(player.bet -= 10, 1, player.balance);
         betDisplay.text = $"Bet: ${player.bet}";
     }
 
-    public void AllIn()
+    public void MaxBet()
     {
-        if (GameController.Instance.inRace) return;
+        if (GameController.Instance.inGame) return;
 
         player.bet = player.balance;
         betDisplay.text = $"Bet: ${player.bet}";

@@ -14,21 +14,31 @@ public class Opponent : MonoBehaviour
         bet = Random.Range(0, balance / 4);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (balance > 0) infoDisplay.text = $"{selection} | ${balance}";
         else infoDisplay.text = "OUT";
+
+        infoDisplay.color = Color.Lerp(infoDisplay.color, Color.white, 0.03f);
     }
 
     public void Win()
     {
-        balance = bet * 2;
+        if (balance <= 0) return;
+
+        balance += bet * 2;
         bet = 0;
+
+        infoDisplay.color = Color.green;
     }
 
     public void Lose()
     {
+        if (balance <= 0) return;
+
         balance -= bet;
         bet = 0;
+
+        infoDisplay.color = Color.red;
     }
 }

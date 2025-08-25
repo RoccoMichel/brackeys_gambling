@@ -4,7 +4,8 @@ using Unity.VisualScripting;
 
 public class GameController : MonoBehaviour
 {
-    public bool inRace;
+    public GameModes gameMode;
+    public bool inGame;
     public int optionsCount = 4;
     public static GameController Instance { get; private set; }
     public CanvasManager canvas;
@@ -12,9 +13,13 @@ public class GameController : MonoBehaviour
     public Player player;
 
     [SerializeField] private GameObject snailRacePrefab;
+    private SnailManager snailManager;
+
+    public enum GameModes { SnailRace, }
+
     private void Awake()
     {
-        if(Instance != null) { Destroy(gameObject); }
+        if (Instance != null) { Destroy(gameObject); }
         Instance = this;
     }
 
@@ -25,35 +30,60 @@ public class GameController : MonoBehaviour
         NewRace();
     }
 
-    public void RaceFinish(int result)
-    {
-        inRace = false;
-
-        foreach(Opponent o in OpponentList)
-        {
-            if (o.selection == result) o.Win();
-            else o.Lose();
-        }
-
-        if (player.selection == result) player.Win();
-        else player.Lose();
-
-        NewRace();
-    }
+    // Snail Race Related
 
     public void NewRace()
     {
         foreach (var o in OpponentList) o.ChooseBet();
         canvas.GenerateButtons(optionsCount);
-    }
 
+        switch (gameMode)
+        {
+            case GameModes.SnailRace:
+        
+                snailManager = Instantiate(snailRacePrefab).GetComponentInChildren<SnailManager>();
+                break;
+        }
+    }
     public void StartRace()
     {
-        inRace = true;
+        inGame = true;
         canvas.ClearButtons();
-        Instantiate(snailRacePrefab);
+
+        switch (gameMode)
+        {
+            case GameModes.SnailRace:
+
+                snailManager.StartRace();
+                break;
+        }
+    }
+    public void RaceFinish(int result)
+    {
+        inGame = false;
+
+        foreach (Opponent o in OpponentList)
+        {
+            if (o.selection == result) o.Win();
+            else o.Lose();
+        }
+
+        if (player.selection == result)
+        {
+            player.Win();
+            Destroy(Instantiate(Resources.Load("Confetti")), 4);
+            canvas.SetBalanceColor(Color.green);
+        }
+        else
+        {
+            player.Lose();
+            canvas.SetBalanceColor(Color.red);
+        }
+
+        NewRace();
     }
 
+    // Opponent Related
     public void GenerateOpponents(int count)
     {
         for (int i = 0; i < count; i++)

@@ -4,8 +4,10 @@ using UnityEngine;
 public class BetButton : MonoBehaviour
 {
     public int selection = 0;
+    public string message = "gamble";
     [SerializeField] private TMP_Text display;
     GameController gameController;
+
 
 
     private void Start()
@@ -15,7 +17,7 @@ public class BetButton : MonoBehaviour
 
     private void Update()
     {
-        display.text = $"Bet on {selection}";
+        display.text = message;
 
     }
 

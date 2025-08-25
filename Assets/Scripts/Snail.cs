@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Snail : MonoBehaviour
@@ -13,14 +14,29 @@ public class Snail : MonoBehaviour
     public void HaltStop()
     {
         rb2D.linearVelocityX = 0f;
+        StopAllCoroutines();
     }
     public void StartMoving()
     {
-        rb2D.linearVelocityX = speed;
+        StartCoroutine(Accelerate());
     }
 
     public int GetDaNumbah()
     {
         return numbah;
+    }
+
+    IEnumerator Accelerate()
+    {
+        float acceleration = 0;
+        while (acceleration < speed)
+        {
+            rb2D.linearVelocityX = acceleration;
+            acceleration = Mathf.Clamp(acceleration += Time.deltaTime, 0, speed);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return null;
     }
 }
