@@ -1,3 +1,5 @@
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SnailManager : MonoBehaviour
@@ -40,7 +42,9 @@ public class SnailManager : MonoBehaviour
         Snail winSnail = collision.GetComponent<Snail>();
         StopRace();
         winner = winSnail.GetDaNumbah();
-        Debug.Log(winner + " won");
+        GameObject text = Instantiate((GameObject)Resources.Load("Winner Text"), GameController.Instance.canvas.transform);
+        text.GetComponent<TMP_Text>().text = $"Snail {winner} WON!";
+        Destroy(text, 5);
         GameController.Instance.RaceFinish(winner);
         Destroy(this.transform.parent.gameObject);
     }
