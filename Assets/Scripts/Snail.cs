@@ -10,7 +10,10 @@ public class Snail : MonoBehaviour
     {
         this.speed = speed;
     }
-
+    public void HaltStop()
+    {
+        rb2D.linearVelocityX = 0f;
+    }
     public void StartMoving()
     {
         rb2D.linearVelocityX = speed;

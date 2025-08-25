@@ -21,7 +21,13 @@ public class SnailManager : MonoBehaviour
         }
         StartRace();
     }
-
+    private void StopRace()
+    {
+        foreach(Snail snail in snails)
+        {
+            snail.HaltStop();
+        }
+    }
     private void StartRace()
     {
         foreach(Snail snail in snails)
@@ -32,8 +38,9 @@ public class SnailManager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Snail winSnail = collision.GetComponent<Snail>();
+        StopRace();
         winner = winSnail.GetDaNumbah();
         Debug.Log(winner + " won");
-        // tell gameController
+        GameController.Instance.RaceFinish(winner);
     }
 }
