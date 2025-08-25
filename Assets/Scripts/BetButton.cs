@@ -16,8 +16,8 @@ public class BetButton : MonoBehaviour
 
     public void SetSelection()
     {
-        gameController.PlayerList[0].selection = selection;
+        gameController.player.selection = selection;
 
-        Debug.Log($"{gameController.PlayerList[0].playerName} bet on: {selection}");
+        gameController.StartRace();
     }
 }

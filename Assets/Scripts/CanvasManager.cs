@@ -5,13 +5,16 @@ using UnityEngine;
 public class CanvasManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text balanceDisplay;
+    [SerializeField] private TMP_Text betDisplay;
     [SerializeField] private Transform buttonParent;
+    [SerializeField] public Transform opponentParent;
     public Player player;
     List<GameObject> Buttons = new();
 
     private void Start()
     {
         RefreshCanvas();
+        betDisplay.text = $"Bet: ${player.bet}";
     }
 
     public void RefreshCanvas()
@@ -31,5 +34,19 @@ public class CanvasManager : MonoBehaviour
     public void ClearButtons()
     {
         foreach (GameObject gameObject in Buttons) { Destroy(gameObject); }
+    }
+
+    public void IncreaseBet()
+    {
+        
+        player.bet = Mathf.Clamp(player.bet += 10, 0, player.balance);
+        betDisplay.text = $"Bet: ${player.bet}";
+    }
+
+    public void DecreaseBet()
+    {
+        player.bet = Mathf.Clamp(player.bet -= 10, 0, player.balance);
+
+        betDisplay.text = $"Bet: ${player.bet}";
     }
 }

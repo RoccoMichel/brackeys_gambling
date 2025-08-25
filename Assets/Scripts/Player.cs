@@ -17,5 +17,6 @@ public class Player : ScriptableObject
     public void Lose()
     {
         balance -= bet;
+        bet = 0;
     }
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca2a4e0cf2aa86743b9fc0f6cfebc20e, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  balance: 1000
+  playerName: YOU
+  balance: 500
   bet: 0
   selection: 0
