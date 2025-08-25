@@ -38,15 +38,18 @@ public class CanvasManager : MonoBehaviour
 
     public void IncreaseBet()
     {
-        
-        player.bet = Mathf.Clamp(player.bet += 10, 0, player.balance);
+        if (GameController.Instance.inRace) return;
+
+        if (player.bet == 1) player.bet = 10;
+        else player.bet = Mathf.Clamp(player.bet += 10, 1, player.balance);
         betDisplay.text = $"Bet: ${player.bet}";
     }
 
     public void DecreaseBet()
     {
-        player.bet = Mathf.Clamp(player.bet -= 10, 0, player.balance);
+        if (GameController.Instance.inRace) return;
 
+        player.bet = Mathf.Clamp(player.bet -= 10, 1, player.balance);
         betDisplay.text = $"Bet: ${player.bet}";
     }
 }

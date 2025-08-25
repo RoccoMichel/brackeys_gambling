@@ -54,6 +54,7 @@ MonoBehaviour:
   balance: 500
   bet: 0
   selection: 0
+  infoDisplay: {fileID: 6139510246248402993}
 --- !u!222 &5268574287698678824
 CanvasRenderer:
   m_ObjectHideFlags: 0

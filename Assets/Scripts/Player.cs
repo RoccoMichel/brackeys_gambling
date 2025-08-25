@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "Player", menuName = "Scriptable Objects/Player")]
 public class Player : ScriptableObject
@@ -18,5 +19,7 @@ public class Player : ScriptableObject
     {
         balance -= bet;
         bet = 0;
+
+        if (balance <= 0) SceneManager.LoadScene("GameOverScene");
     }
 }

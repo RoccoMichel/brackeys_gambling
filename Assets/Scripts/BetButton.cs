@@ -11,7 +11,12 @@ public class BetButton : MonoBehaviour
     private void Start()
     {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+    }
+
+    private void Update()
+    {
         display.text = $"Bet on {selection}";
+
     }
 
     public void SetSelection()

@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 
 public class GameController : MonoBehaviour
 {
+    public bool inRace;
     public int optionsCount = 4;
     public static GameController Instance { get; private set; }
     public CanvasManager canvas;
@@ -25,6 +26,7 @@ public class GameController : MonoBehaviour
 
     public void RaceFinish(int result)
     {
+        inRace = false;
         foreach(Opponent o in OpponentList)
         {
             if (o.selection == result) o.Win();
@@ -32,17 +34,19 @@ public class GameController : MonoBehaviour
         }
 
         if (player.selection == result) player.Win();
+
+        canvas.RefreshCanvas();
     }
 
     public void NewRace()
     {
+        foreach (var o in OpponentList) o.ChooseBet();
         canvas.GenerateButtons(optionsCount);
-
-        
     }
 
     public void StartRace()
     {
+        inRace = true;
         canvas.ClearButtons();
         Instantiate(snailRacePrefab);
     }
