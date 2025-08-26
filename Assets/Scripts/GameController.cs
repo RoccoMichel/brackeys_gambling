@@ -50,6 +50,8 @@ public class GameController : MonoBehaviour
         inGame = true;
         canvas.ClearButtons();
 
+
+        //very good
         switch (gameMode)
         {
             case GameModes.SnailRace:
