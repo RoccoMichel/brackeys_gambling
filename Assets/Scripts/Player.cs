@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     public void Win()
     {
+        //Maybe we could have diffent win multipliers for different games ie some games are easier to win but has a lower reward and vice versa
         balance += bet * 2;
         bet = Mathf.CeilToInt(balance / 2);
     }
