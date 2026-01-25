@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class TobiasTimer : MonoBehaviour
 {
+    [Header("Press F to print!")]
     [SerializeField] private string timer = "ZE TIME JA";
     public float scale = 1f;
     private float _seconds;
@@ -62,8 +63,6 @@ public class TobiasTimer : MonoBehaviour
             timer = $"Day: {Days}, {Hours}:{Minutes}:{Mathf.Round(Seconds)}";
             Debug.Log(timer);
         }
-
-        //timer = (GetTimerText(_seconds));
     }
 
     // mitt alternative

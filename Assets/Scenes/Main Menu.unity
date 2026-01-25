@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 592981669}
   - component: {fileID: 592981668}
   m_Layer: 0
-  m_Name: Flag_of_Finland.svg_0
+  m_Name: FINLAND!!!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hytale !
+  m_text: Live, Laugh, GAMBLE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
