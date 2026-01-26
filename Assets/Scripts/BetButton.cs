@@ -23,8 +23,8 @@ public class BetButton : MonoBehaviour
 
     public void SetSelection()
     {
-        gameController.player.selection = selection;
+        gameController.selection = selection;
 
-        gameController.StartRace();
+        gameController.StartGame();
     }
 }

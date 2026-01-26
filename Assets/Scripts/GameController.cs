@@ -1,22 +1,47 @@
-using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public GameModes gameMode;
+    public GameObject[] gameModes;
     public bool inGame;
     public int optionsCount = 4;
     public static GameController Instance { get; private set; }
     public CanvasManager canvas;
     public List<Opponent> OpponentList = new();
-    public Player player;
 
     [SerializeField] private GameObject snailRacePrefab;
     private SnailManager snailManager;
+    public int balance = 1000;
+    public int bet;
+    public int selection;
 
-    public enum GameModes { SnailRace, }
+    private InputAction increase1;
+    private InputAction increase10;
+    private InputAction increase100;
+    private InputAction decrease1;
+    private InputAction decrease10;
+    private InputAction decrease100;
+    private InputAction max;
+    private InputAction min;
 
+    public void Win()
+    {
+        //Maybe we could have different win multipliers for different games ie some games are easier to win but has a lower reward and vice versa
+        balance += bet * 2;
+        bet = Mathf.CeilToInt(balance / 2);
+    }
+
+    public void Lose()
+    {
+        balance -= bet;
+        bet = Mathf.CeilToInt(balance / 2);
+
+        if (balance <= 0) SceneManager.LoadScene("GameOver");
+    }
     private void Awake()
     {
         if (Instance != null) { Destroy(gameObject); }
@@ -25,42 +50,46 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        player.balance = 500;
+        increase1 = InputSystem.actions.FindAction("increase1");
+        increase10 = InputSystem.actions.FindAction("increase10");
+        increase100 = InputSystem.actions.FindAction("increase100");
+        decrease1 = InputSystem.actions.FindAction("decrease1");
+        decrease10 = InputSystem.actions.FindAction("decrease10");
+        decrease100 = InputSystem.actions.FindAction("decrease100");
+        min = InputSystem.actions.FindAction("min");
+        max = InputSystem.actions.FindAction("max");
+
+        balance = 500;
         GenerateOpponents(4);
-        NewRace();
+        NewGame();
+    }
+
+    private void Update()
+    {
+        if (increase1.WasPressedThisFrame()) bet += 1;
+        else if (increase100.WasPressedThisFrame()) bet += 100;
+        else if (increase10.WasPressedThisFrame()) bet += 10;
+        if (decrease1.WasPressedThisFrame()) bet -= 1;
+        else if (decrease100.WasPressedThisFrame()) bet -= 100;
+        else if (decrease10.WasPressedThisFrame()) bet -= 10;
+        if (min.WasPressedThisFrame()) bet = 0;
+        if (max.WasPressedThisFrame()) bet = balance;
+
+        bet = Mathf.Clamp(bet, 0, balance);
     }
 
     // Snail Race Related
 
-    public void NewRace()
+    public void NewGame()
     {
-        foreach (var o in OpponentList) o.ChooseBet();
-        canvas.GenerateButtons(optionsCount);
 
-        switch (gameMode)
-        {
-            case GameModes.SnailRace:
-        
-                snailManager = Instantiate(snailRacePrefab).GetComponentInChildren<SnailManager>();
-                break;
-        }
     }
-    public void StartRace()
+    public void StartGame()
     {
         inGame = true;
         canvas.ClearButtons();
-
-
-        //very good
-        switch (gameMode)
-        {
-            case GameModes.SnailRace:
-
-                snailManager.StartRace();
-                break;
-        }
     }
-    public void RaceFinish(int result)
+    public void GameFinish(int result)
     {
         inGame = false;
 
@@ -70,19 +99,19 @@ public class GameController : MonoBehaviour
             else o.Lose();
         }
 
-        if (player.selection == result)
+        if (selection == result)
         {
-            player.Win();
+            Win();
             Destroy(Instantiate(Resources.Load("Confetti")), 4);
             canvas.SetBalanceColor(Color.green);
         }
         else
         {
-            player.Lose();
+            Lose();
             canvas.SetBalanceColor(Color.red);
         }
 
-        NewRace();
+        NewGame();
     }
 
     // Opponent Related

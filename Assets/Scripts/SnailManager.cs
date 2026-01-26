@@ -47,7 +47,7 @@ public class SnailManager : MonoBehaviour
         StopRace();
         winner = winSnail.GetDaNumbah();
         Instantiate((GameObject)Resources.Load("Winner-Text"), GameController.Instance.canvas.transform).GetComponent<PopText>().SetValues($"Snail #{winner} WON!", 3f);
-        GameController.Instance.RaceFinish(winner);
+        GameController.Instance.GameFinish(winner);
         Destroy(this.transform.parent.gameObject);
     }
 }
