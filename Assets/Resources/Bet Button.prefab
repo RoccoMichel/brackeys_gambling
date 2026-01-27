@@ -53,8 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selection: 0
-  message: gamble
-  display: {fileID: 5745684607298086337}
+  messageDisplay: {fileID: 5745684607298086337}
 --- !u!222 &7512366309853701400
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -139,7 +138,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3212770687060774545}
         m_TargetAssemblyTypeName: BetButton, Assembly-CSharp
-        m_MethodName: SetSelection
+        m_MethodName: PlayerChoice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

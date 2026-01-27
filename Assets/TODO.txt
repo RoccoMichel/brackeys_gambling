@@ -1,4 +1,2 @@
 DEADLINE: 9-2-2026
 - need some kind of API request system
-- overall gamemanager and mini game progression system
-- change to a listener system for win/lose/start mini game

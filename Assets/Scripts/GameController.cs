@@ -1,23 +1,22 @@
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject[] gameModes;
-    public bool inGame;
-    public int optionsCount = 4;
     public static GameController Instance { get; private set; }
+    public bool inGame;
+    internal Minigame currentGame;
+    public GameObject[] games;
     public CanvasManager canvas;
     public List<Opponent> OpponentList = new();
 
-    [SerializeField] private GameObject snailRacePrefab;
-    private SnailManager snailManager;
+    [Header("Player Values")]
     public int balance = 1000;
     public int bet;
-    public int selection;
+    public int choice;
+    [HideInInspector] public int gamesPlayed;
 
     private InputAction increase1;
     private InputAction increase10;
@@ -32,13 +31,13 @@ public class GameController : MonoBehaviour
     {
         //Maybe we could have different win multipliers for different games ie some games are easier to win but has a lower reward and vice versa
         balance += bet * 2;
-        bet = Mathf.CeilToInt(balance / 2);
+        bet = Mathf.Clamp(bet, 1, balance);
     }
 
     public void Lose()
     {
         balance -= bet;
-        bet = Mathf.CeilToInt(balance / 2);
+        bet = Mathf.Clamp(bet, 1, balance);
 
         if (balance <= 0) SceneManager.LoadScene("GameOver");
     }
@@ -46,6 +45,7 @@ public class GameController : MonoBehaviour
     {
         if (Instance != null) { Destroy(gameObject); }
         Instance = this;
+        bet = balance/2;
     }
 
     private void Start()
@@ -59,47 +59,54 @@ public class GameController : MonoBehaviour
         min = InputSystem.actions.FindAction("min");
         max = InputSystem.actions.FindAction("max");
 
-        balance = 500;
-        GenerateOpponents(4);
         NewGame();
     }
 
     private void Update()
     {
+        // Adjusting Bet Amount based on player Input
         if (increase1.WasPressedThisFrame()) bet += 1;
         else if (increase100.WasPressedThisFrame()) bet += 100;
         else if (increase10.WasPressedThisFrame()) bet += 10;
+        // Order is important for modifier keys to work!
         if (decrease1.WasPressedThisFrame()) bet -= 1;
         else if (decrease100.WasPressedThisFrame()) bet -= 100;
         else if (decrease10.WasPressedThisFrame()) bet -= 10;
         if (min.WasPressedThisFrame()) bet = 0;
         if (max.WasPressedThisFrame()) bet = balance;
 
-        bet = Mathf.Clamp(bet, 0, balance);
+        bet = Mathf.Clamp(bet, 1, balance);
     }
-
-    // Snail Race Related
 
     public void NewGame()
     {
-
+        int nextGame = Random.Range(0, games.Length);
+        currentGame = Instantiate(games[nextGame]).GetComponent<Minigame>();
     }
     public void StartGame()
     {
+        if (bet <= 0)
+        {
+            Debug.LogWarning("Player bet is zero or below!");
+            return;
+        }
+
         inGame = true;
         canvas.ClearButtons();
+        currentGame.GameStart();
     }
     public void GameFinish(int result)
     {
         inGame = false;
+        gamesPlayed++;
 
         foreach (Opponent o in OpponentList)
         {
-            if (o.selection == result) o.Win();
+            if (o.choice == result) o.Win();
             else o.Lose();
         }
 
-        if (selection == result)
+        if (choice == result)
         {
             Win();
             Destroy(Instantiate(Resources.Load("Confetti")), 4);
@@ -119,7 +126,7 @@ public class GameController : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            OpponentList.Add(Instantiate(Resources.Load("Opponent"), canvas.opponentParent).GetComponent<Opponent>());
+            OpponentList.Add(Instantiate((GameObject)Resources.Load("Opponent"), canvas.opponentParent).GetComponent<Opponent>());
         }
     }
 }

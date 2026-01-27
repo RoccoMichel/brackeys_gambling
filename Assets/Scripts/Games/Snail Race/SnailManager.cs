@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class SnailManager : MonoBehaviour
+public class SnailManager : Minigame
 {
+    [Header("Snail Manager Attributes")]
     [SerializeField] private Snail[] snails;
-    [SerializeField] private BoxCollider2D goal;
     [SerializeField] private float minSnailSpeed;
     [SerializeField] private float maxSnailSpeed;
-    private int winner;
 
-    private void Start()
+    protected override void OnStart()
     {
+        base.OnStart();
         SetSpeed();
+        choices = snails.Length;
     }
     private void SetSpeed()
     {
@@ -19,14 +20,8 @@ public class SnailManager : MonoBehaviour
             snail.SetSpeed(Random.Range(minSnailSpeed, maxSnailSpeed));
         }
     }
-    private void StopRace()
-    {
-        foreach(Snail snail in snails)
-        {
-            snail.HaltStop();
-        }
-    }
-    public void StartRace()
+
+    public override void GameStart()
     {
         finished = false;
         foreach(Snail snail in snails)
@@ -37,17 +32,24 @@ public class SnailManager : MonoBehaviour
         GetComponent<AudioSource>().Play();
     }
 
-    bool finished;
+    private void StopRace()
+    {
+        foreach (Snail snail in snails)
+        {
+            snail.HaltStop();
+        }
+    }
+
+    private bool finished;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (finished) return;
-
         finished = true;
+
         Snail winSnail = collision.GetComponent<Snail>();
         StopRace();
+
         winner = winSnail.GetDaNumbah();
-        Instantiate((GameObject)Resources.Load("Winner-Text"), GameController.Instance.canvas.transform).GetComponent<PopText>().SetValues($"Snail #{winner} WON!", 3f);
-        GameController.Instance.GameFinish(winner);
-        Destroy(this.transform.parent.gameObject);
+        GameFinish(winner);
     }
 }

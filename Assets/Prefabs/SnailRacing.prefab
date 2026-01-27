@@ -96,6 +96,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1169277647372317913}
+  - component: {fileID: 1585513975232240323}
+  - component: {fileID: 4118898966778918778}
+  - component: {fileID: 9113002536400419348}
   m_Layer: 0
   m_Name: SnailRacing
   m_TagString: Untagged
@@ -120,71 +123,37 @@ Transform:
   - {fileID: 5285335788156554879}
   - {fileID: 5818905811117815222}
   - {fileID: 6842569531124693792}
-  - {fileID: 1452752867771574893}
   - {fileID: 3967949661666432236}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3669779201073610224
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1452752867771574893}
-  - component: {fileID: 1919569362440434931}
-  - component: {fileID: 7832002443602912323}
-  - component: {fileID: 6943213557905263897}
-  m_Layer: 0
-  m_Name: SnailManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1452752867771574893
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3669779201073610224}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.5, y: -1.7, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1169277647372317913}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1919569362440434931
+--- !u!114 &1585513975232240323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3669779201073610224}
+  m_GameObject: {fileID: 1030680464305265110}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60c0edc5b052c4c4e91b8a7591a2a431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  choices: 4
+  buttonMessage: Snail
   snails:
   - {fileID: 6867020697014489133}
   - {fileID: 4303248012690525370}
   - {fileID: 4597031793806867909}
   - {fileID: 7035431813497923802}
-  goal: {fileID: 0}
   minSnailSpeed: 0.5
   maxSnailSpeed: 1.5
---- !u!61 &7832002443602912323
+--- !u!61 &4118898966778918778
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3669779201073610224}
+  m_GameObject: {fileID: 1030680464305265110}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -212,7 +181,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.25300217, y: 1.5696254}
+  m_Offset: {x: 3.7459517, y: -0.02550292}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -222,15 +191,15 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.49399567, y: 10.044768}
+  m_Size: {x: 0.5223789, y: 9.891905}
   m_EdgeRadius: 0
---- !u!82 &6943213557905263897
+--- !u!82 &9113002536400419348
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3669779201073610224}
+  m_GameObject: {fileID: 1030680464305265110}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}

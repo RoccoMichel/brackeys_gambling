@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PopText : MonoBehaviour
 {
-    TMP_Text textDisplay;
+    private TMP_Text textDisplay;
 
     public void SetValues(string message, float lifetime)
     {

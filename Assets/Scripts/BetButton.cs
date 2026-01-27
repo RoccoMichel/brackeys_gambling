@@ -4,8 +4,7 @@ using UnityEngine;
 public class BetButton : MonoBehaviour
 {
     public int selection = 0;
-    public string message = "gamble";
-    [SerializeField] private TMP_Text display;
+    public TMP_Text messageDisplay;
     GameController gameController;
 
 
@@ -15,15 +14,9 @@ public class BetButton : MonoBehaviour
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
-    private void Update()
+    public void PlayerChoice()
     {
-        display.text = message;
-
-    }
-
-    public void SetSelection()
-    {
-        gameController.selection = selection;
+        gameController.choice = selection;
 
         gameController.StartGame();
     }
