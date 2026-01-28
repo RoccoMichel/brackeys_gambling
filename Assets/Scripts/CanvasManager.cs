@@ -9,6 +9,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private Transform buttonParent;
     [SerializeField] public Transform opponentParent;
     public List<GameObject> Buttons = new();
+    private GameObject popText;
 
     private void FixedUpdate()
     {
@@ -18,14 +19,28 @@ public class CanvasManager : MonoBehaviour
         balanceDisplay.color = Color.Lerp(balanceDisplay.color, Color.white, 0.03f);
     }
 
-    public void InstantiateButtons(int amount, string message)
+    public void InstantiateButtons(int amount, string message, bool showButtonNumber)
     {
         ClearButtons();
         for (int i = 1; i < amount + 1; i++)
         {
+            string buttonMessage = message + (showButtonNumber ? $"# {i}" : string.Empty);
+
             Buttons.Add(Instantiate((GameObject)Resources.Load("Bet Button"), buttonParent));
             Buttons[i - 1].GetComponent<BetButton>().selection = i;
-            Buttons[i - 1].GetComponent<BetButton>().messageDisplay.text = $"{message} #{i}";
+            Buttons[i - 1].GetComponent<BetButton>().messageDisplay.text = buttonMessage;
+        }
+    }
+    public void InstantiateButtons(int amount, string[] message, bool showButtonNumber)
+    {
+        ClearButtons();
+        for (int i = 1; i < amount + 1; i++)
+        {
+            string buttonMessage = message[i - 1] + (showButtonNumber ? $"# {i}" : string.Empty);
+
+            Buttons.Add(Instantiate((GameObject)Resources.Load("Bet Button"), buttonParent));
+            Buttons[i - 1].GetComponent<BetButton>().selection = i;
+            Buttons[i - 1].GetComponent<BetButton>().messageDisplay.text = buttonMessage;
         }
     }
 
@@ -36,7 +51,16 @@ public class CanvasManager : MonoBehaviour
 
     public PopText InstantiatePopText()
     {
-        return Instantiate((GameObject)Resources.Load("Winner-Text"), transform).GetComponent<PopText>();
+        if (popText != null) Destroy(popText);
+        popText = Instantiate((GameObject)Resources.Load("Pop-Text"), transform);
+        return popText.GetComponent<PopText>();
+    }
+
+    public PopText InstantiateWinnerText()
+    {
+        if (popText != null) Destroy(popText);
+        popText = Instantiate((GameObject)Resources.Load("Winner-Text"), transform);
+        return popText.GetComponent<PopText>();
     }
 
     public void ClearButtons()

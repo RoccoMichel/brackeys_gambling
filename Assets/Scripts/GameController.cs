@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
     public bool inGame;
+    private int previousGame;
     internal Minigame currentGame;
     public GameObject[] games;
     public CanvasManager canvas;
@@ -80,7 +81,12 @@ public class GameController : MonoBehaviour
 
     public void NewGame()
     {
-        int nextGame = Random.Range(0, games.Length);
+        int nextGame = previousGame;
+        while (nextGame == previousGame)
+        {
+            previousGame = Random.Range(0, games.Length);
+            if (games.Length == 1) break;
+        }
         currentGame = Instantiate(games[nextGame]).GetComponent<Minigame>();
     }
     public void StartGame()
@@ -119,6 +125,12 @@ public class GameController : MonoBehaviour
         }
 
         NewGame();
+    }
+
+    public void IncreaseBet(int amount)
+    {
+        bet += amount;
+        bet = Mathf.Clamp(bet, 1, balance);
     }
 
     // Opponent Related

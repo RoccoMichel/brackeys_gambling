@@ -2,9 +2,16 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(TMP_Text))]
 public class PopText : MonoBehaviour
 {
     private TMP_Text textDisplay;
+
+    public void SetValues(string message)
+    {
+        textDisplay = GetComponent<TMP_Text>();
+        textDisplay.text = message;
+    }
 
     public void SetValues(string message, float lifetime)
     {

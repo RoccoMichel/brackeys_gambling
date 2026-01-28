@@ -7,12 +7,13 @@ public class Minigame : MonoBehaviour
     protected int winner;
     [SerializeField, Tooltip("The words before the index on the button choices, leave out ': '")]
     private string buttonMessage = "Bet on";
+    [SerializeField] private bool showButtonNumber = true;
     protected GameController GameController { get { return GameController.Instance; } }
 
 
     protected virtual void OnStart()
     {
-        GameController.canvas.InstantiateButtons(choices, buttonMessage);
+        GameController.canvas.InstantiateButtons(choices, buttonMessage, showButtonNumber);
     }
 
     private void Start() => OnStart();
@@ -24,8 +25,15 @@ public class Minigame : MonoBehaviour
 
     public virtual void GameFinish(int winner)
     {
+        // GameController.canvas.InstantiateWinnerText().SetValues($"{winner} Won!", 3f);
         GameController.GameFinish(winner);
-        GameController.canvas.InstantiatePopText().SetValues($"{winner} Won!", 3f);
+        Destroy(gameObject);
+    }
+
+    protected void GameFail()
+    {
+        Debug.LogError("Minigame failed, starting new one.");
+        GameController.NewGame();
         Destroy(gameObject);
     }
 }
