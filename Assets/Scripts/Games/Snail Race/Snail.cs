@@ -21,11 +21,13 @@ public class Snail : MonoBehaviour
         StartCoroutine(Accelerate());
     }
 
+    // Väldigt high tech metod så managern vet vilken snigel det är - Felix
     public int GetDaNumbah()
     {
         return numbah;
     }
 
+    // Gör så att snigeln långsamt accelerar istället för att starta på en specifik hastighet - Felix
     IEnumerator Accelerate()
     {
         float acceleration = 0;

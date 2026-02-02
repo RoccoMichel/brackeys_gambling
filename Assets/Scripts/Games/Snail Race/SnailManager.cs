@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class SnailManager : Minigame
-{
+{   
     [Header("Snail Manager Attributes")]
     [SerializeField] private Snail[] snails;
     [SerializeField] private float minSnailSpeed;
@@ -13,6 +13,7 @@ public class SnailManager : Minigame
         SetSpeed();
         choices = snails.Length;
     }
+    // Väljer hastigheten - Felix
     private void SetSpeed()
     {
         foreach(Snail snail in snails)
@@ -21,6 +22,7 @@ public class SnailManager : Minigame
         }
     }
 
+    // Påbörjar spelet - Felix
     public override void GameStart()
     {
         finished = false;
@@ -32,6 +34,7 @@ public class SnailManager : Minigame
         GetComponent<AudioSource>().Play();
     }
 
+    // Avslutar rejset - Felix
     private void StopRace()
     {
         foreach (Snail snail in snails)
@@ -41,6 +44,8 @@ public class SnailManager : Minigame
     }
 
     private bool finished;
+
+    // Tar reda på vilken snigel som når mållinjen först och berättar för gamecontrollern - Felix
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (finished) return;

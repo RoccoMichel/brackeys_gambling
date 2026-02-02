@@ -17,7 +17,7 @@ public class SlinkoManager : Minigame
         snail.SetActive(true);
         StartCoroutine(CinematicStart());
     }
-
+    //Väljer slumpmässig plats för snigeln att spawna - Felix
     private void RandomizeSpawn()
     {
         int spawnX = Random.Range(-6, 6);
@@ -25,17 +25,17 @@ public class SlinkoManager : Minigame
         snail.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
     }
 
+    
     private void Update()
     {
-        //For testing
+        //For testing - Felix
         if (Input.GetKeyDown(KeyCode.R))
         {
             RandomizeSpawn();           
         }
     }
 
-    //Absolute cinema
-    //It's beautiful! -Rocco
+    // vÄRY COOL start so it like studsa runt - Felix
     private IEnumerator CinematicStart()
     {
         RandomizeSpawn();

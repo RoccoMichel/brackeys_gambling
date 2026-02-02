@@ -49,6 +49,7 @@ public class GameController : MonoBehaviour
         bet = balance/2;
     }
 
+    // Fixed the stupid ass input system - Rocco
     private void Start()
     {
         increase1 = InputSystem.actions.FindAction("increase1");
@@ -59,13 +60,15 @@ public class GameController : MonoBehaviour
         decrease100 = InputSystem.actions.FindAction("decrease100");
         min = InputSystem.actions.FindAction("min");
         max = InputSystem.actions.FindAction("max");
-
+        
         NewGame();
     }
 
     private void Update()
     {
-        // Adjusting Bet Amount based on player Input
+        // Felix Invention
+        if (inGame) return;
+        // Adjusting Bet Amount based on player Input 
         if (increase1.WasPressedThisFrame()) bet += 1;
         else if (increase100.WasPressedThisFrame()) bet += 100;
         else if (increase10.WasPressedThisFrame()) bet += 10;
@@ -79,6 +82,7 @@ public class GameController : MonoBehaviour
         bet = Mathf.Clamp(bet, 1, balance);
     }
 
+    // Startar nytt spel och väljer ut ett slumpmässigt minigame - Felix
     public void NewGame()
     {
         int nextGame = previousGame;
@@ -101,6 +105,8 @@ public class GameController : MonoBehaviour
         canvas.ClearButtons();
         currentGame.GameStart();
     }
+
+    // Rocco
     public void GameFinish(int result)
     {
         inGame = false;
@@ -133,7 +139,7 @@ public class GameController : MonoBehaviour
         bet = Mathf.Clamp(bet, 1, balance);
     }
 
-    // Opponent Related
+    // Opponent Related - Rocco
     public void GenerateOpponents(int count)
     {
         for (int i = 0; i < count; i++)
