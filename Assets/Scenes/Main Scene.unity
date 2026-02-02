@@ -1166,6 +1166,7 @@ MonoBehaviour:
   - {fileID: 1030680464305265110, guid: 9a77ab13081841e4492914eb08b1cdd5, type: 3}
   - {fileID: 2574626503371521484, guid: fde618e8a5a72354993801781ad690df, type: 3}
   - {fileID: 3030123212262310330, guid: 44c94de91c96acc4eb45ad9198470b8a, type: 3}
+  - {fileID: 7791963051503051428, guid: f3ea0481ecfa7f2438ba3cf5aa52d097, type: 3}
   canvas: {fileID: 597952082}
   OpponentList: []
   balance: 100

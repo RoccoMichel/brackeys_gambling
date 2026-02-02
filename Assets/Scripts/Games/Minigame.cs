@@ -7,7 +7,7 @@ public class Minigame : MonoBehaviour
     protected int winner;
     [SerializeField, Tooltip("The words before the index on the button choices, leave out ': '")]
     private string buttonMessage = "Bet on";
-    [SerializeField] private bool showButtonNumber = true;
+    [SerializeField] protected bool showButtonNumber = true;
     protected GameController GameController { get { return GameController.Instance; } }
 
 
