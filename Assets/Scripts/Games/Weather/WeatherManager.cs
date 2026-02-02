@@ -36,7 +36,7 @@ public class WeatherManager : Minigame
         base.GameFinish(winner);
     }
 
-    private const string key = "1c581fce429c45a59a9121614250109"; // stolen from Charlie
+    private const string key = "1c581fce429c45a59a9121614250109"; // stolen from Charlie or was it?!?!+
 
     [System.Serializable]
     public class Condition

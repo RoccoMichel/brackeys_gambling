@@ -85,6 +85,17 @@ public class GameController : MonoBehaviour
     // Startar nytt spel och väljer ut ett slumpmässigt minigame - Felix
     public void NewGame()
     {
+        if (gamesPlayed >= 10)
+        {
+        
+             SceneManager.LoadScene("WinScreenScene");
+
+            //Compare to opponents 
+
+            // Upload results
+
+
+        }
         int nextGame = previousGame;
         while (nextGame == previousGame)
         {
@@ -100,6 +111,7 @@ public class GameController : MonoBehaviour
             Debug.LogWarning("Player bet is zero or below!");
             return;
         }
+       
 
         inGame = true;
         canvas.ClearButtons();
@@ -135,6 +147,8 @@ public class GameController : MonoBehaviour
 
     public void IncreaseBet(int amount)
     {
+        //Stopar dig från att betta mitt i spelet - Felix
+        if (inGame) return;
         bet += amount;
         bet = Mathf.Clamp(bet, 1, balance);
     }
