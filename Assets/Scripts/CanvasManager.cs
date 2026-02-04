@@ -55,7 +55,12 @@ public class CanvasManager : MonoBehaviour
         popText = Instantiate((GameObject)Resources.Load("Pop-Text"), transform);
         return popText.GetComponent<PopText>();
     }
-
+    public PopText InstantiateQuestionText()
+    {
+        if (popText != null) Destroy(popText);
+        popText = Instantiate((GameObject)Resources.Load("Question-Text"), transform);
+        return popText.GetComponent<PopText>();
+    }
     public PopText InstantiateWinnerText()
     {
         if (popText != null) Destroy(popText);

@@ -139,7 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   choices: 4
-  buttonMessage: Snail
+  buttonMessage: 'Snail '
+  showButtonNumber: 1
   snails:
   - {fileID: 6867020697014489133}
   - {fileID: 4303248012690525370}

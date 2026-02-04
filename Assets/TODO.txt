@@ -1,5 +1,3 @@
 DEADLINE: 9-2-2026
 *For enemies: https://github.com/thm/uinames API
-*Rock, Paper, Scissors Minigame
-*Trivia Minigame: https://opentdb.com/api_config.php
 *Make the enemies actually good

@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
     public bool inGame;
+    public int gamesPerGame = 10;
     private int previousGame;
     internal Minigame currentGame;
     public GameObject[] games;
@@ -85,7 +86,7 @@ public class GameController : MonoBehaviour
     // Startar nytt spel och väljer ut ett slumpmässigt minigame - Felix
     public void NewGame()
     {
-        if (gamesPlayed >= 10)
+        if (gamesPlayed >= gamesPerGame)
         {
         
              SceneManager.LoadScene("WinScreenScene");
