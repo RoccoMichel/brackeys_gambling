@@ -88,15 +88,10 @@ public class GameController : MonoBehaviour
     {
         if (gamesPlayed >= gamesPerGame)
         {
-        
-             SceneManager.LoadScene("WinScreenScene");
-
-            //Compare to opponents 
-
-            // Upload results
-
-
+            currentGame = Instantiate((GameObject)Resources.Load("Double or Nothing")).GetComponent<Minigame>();
+            return;            
         }
+
         int nextGame = previousGame;
         while (nextGame == previousGame)
         {

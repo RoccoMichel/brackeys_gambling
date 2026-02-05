@@ -43,7 +43,6 @@ public class CanvasManager : MonoBehaviour
             Buttons[i - 1].GetComponent<BetButton>().messageDisplay.text = buttonMessage;
         }
     }
-
     public void SetBalanceColor(Color color)
     {
         balanceDisplay.color = color;

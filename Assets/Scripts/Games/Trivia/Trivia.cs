@@ -15,6 +15,7 @@ public class Trivia : Minigame
     public override void GameStart()
     {
         base.GameStart();
+        GameController.canvas.InstantiatePopText().SetValues(string.Empty);
         GameFinish(correctAnswer);
     }
 

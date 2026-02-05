@@ -1,3 +1,5 @@
 DEADLINE: 9-2-2026
 *For enemies: https://github.com/thm/uinames API
 *Make the enemies actually good
+*Add timer for stress lmao
+*Break between minigames to show what happend
