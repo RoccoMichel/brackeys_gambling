@@ -26,7 +26,7 @@ public class CanvasManager : MonoBehaviour
         {
             string buttonMessage = message + (showButtonNumber ? $"# {i}" : string.Empty);
 
-            Buttons.Add(Instantiate((GameObject)Resources.Load("Bet Button"), buttonParent));
+            Buttons.Add(Instantiate((GameObject)Resources.Load("UI/Bet Button"), buttonParent));
             Buttons[i - 1].GetComponent<BetButton>().selection = i;
             Buttons[i - 1].GetComponent<BetButton>().messageDisplay.text = buttonMessage;
         }
@@ -38,7 +38,7 @@ public class CanvasManager : MonoBehaviour
         {
             string buttonMessage = message[i - 1] + (showButtonNumber ? $"# {i}" : string.Empty);
 
-            Buttons.Add(Instantiate((GameObject)Resources.Load("Bet Button"), buttonParent));
+            Buttons.Add(Instantiate((GameObject)Resources.Load("UI/Bet Button"), buttonParent));
             Buttons[i - 1].GetComponent<BetButton>().selection = i;
             Buttons[i - 1].GetComponent<BetButton>().messageDisplay.text = buttonMessage;
         }
@@ -51,19 +51,19 @@ public class CanvasManager : MonoBehaviour
     public PopText InstantiatePopText()
     {
         if (popText != null) Destroy(popText);
-        popText = Instantiate((GameObject)Resources.Load("Pop-Text"), transform);
+        popText = Instantiate((GameObject)Resources.Load("UI/Pop-Text"), transform);
         return popText.GetComponent<PopText>();
     }
     public PopText InstantiateQuestionText()
     {
         if (popText != null) Destroy(popText);
-        popText = Instantiate((GameObject)Resources.Load("Question-Text"), transform);
+        popText = Instantiate((GameObject)Resources.Load("UI/Question-Text"), transform);
         return popText.GetComponent<PopText>();
     }
     public PopText InstantiateWinnerText()
     {
         if (popText != null) Destroy(popText);
-        popText = Instantiate((GameObject)Resources.Load("Winner-Text"), transform);
+        popText = Instantiate((GameObject)Resources.Load("UI/Winner-Text"), transform);
         return popText.GetComponent<PopText>();
     }
 

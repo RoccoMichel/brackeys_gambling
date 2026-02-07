@@ -6,8 +6,8 @@ using System.Collections.Generic;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
+    public GameSettings gameSettings;
     public bool inGame;
-    public int gamesPerGame = 10;
     private int previousGame;
     internal Minigame currentGame;
     public GameObject[] games;
@@ -15,7 +15,8 @@ public class GameController : MonoBehaviour
     public List<Opponent> OpponentList = new();
 
     [Header("Player Values")]
-    public int balance = 1000;
+    [Tooltip("Start Balance is controlled by GameSettings!")]
+    public int balance;
     public int bet;
     public int choice;
     [HideInInspector] public int gamesPlayed;
@@ -46,11 +47,20 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         if (Instance != null) { Destroy(gameObject); }
+        if (gameSettings == null) Debug.LogError("No GameSettings assigned to the GameController!");
         Instance = this;
+
+        balance = gameSettings.roundSettings.playerStartMoney;
         bet = balance/2;
+
     }
 
     // Fixed the stupid ass input system - Rocco
+
+    // > "-Rocco"
+    // > Checks Blame
+    // > Committed by Felix
+    // °=°
     private void Start()
     {
         increase1 = InputSystem.actions.FindAction("increase1");
@@ -86,9 +96,9 @@ public class GameController : MonoBehaviour
     // Startar nytt spel och väljer ut ett slumpmässigt minigame - Felix
     public void NewGame()
     {
-        if (gamesPlayed >= gamesPerGame)
+        if (gamesPlayed >= gameSettings.roundSettings.gamesPerRound)
         {
-            currentGame = Instantiate((GameObject)Resources.Load("Double or Nothing")).GetComponent<Minigame>();
+            currentGame = Instantiate((GameObject)Resources.Load("Games/Double or Nothing")).GetComponent<Minigame>();
             return;            
         }
 

@@ -26,8 +26,9 @@ public class Trivia : Minigame
 
     IEnumerator GetFacts()
     {
-        string address = "https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple";
-
+        // https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple
+        string address = $"https://opentdb.com/api.php?amount=1&difficulty={GameController.gameSettings.roundSettings.difficulty}&type=multiple";
+        
         using (UnityWebRequest api = UnityWebRequest.Get(address))
         {
             GameController.canvas.InstantiatePopText().SetValues("loading");

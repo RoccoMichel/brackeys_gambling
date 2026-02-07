@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DoubleOrNothing : Minigame
 {
@@ -7,7 +6,7 @@ public class DoubleOrNothing : Minigame
     {
         GameController.gamesPlayed = -1;
         GameController.canvas.InstantiateButtons(2, new string[] { "Double", "Nothing" }, showButtonNumber);
-
+        GameController.canvas.InstantiatePopText().SetValues("Double or Nothing", 2);
     }
     public override void GameStart()
     {
@@ -18,7 +17,7 @@ public class DoubleOrNothing : Minigame
     {
         if (GameController.choice == 2)
         {
-            SceneManager.LoadScene("GameWin");
+            Instantiate((GameObject)Resources.Load("Podium"));
             return;
         }
         GameController.bet = 0;

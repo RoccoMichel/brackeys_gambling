@@ -4,8 +4,15 @@ using UnityEngine.Networking;
 
 public class WeatherManager : Minigame
 {
+    [System.Serializable] public struct TemperatureOffsetRange
+    {
+        public int offsetRange;
+        public int deviationFromOrigin;
+    }
     [Header("Weather Manager Attributes")]
-    public int fakeTemperatureRange = 20;
+    public TemperatureOffsetRange easyOffset = new() { offsetRange = 30, deviationFromOrigin = 10};
+    public TemperatureOffsetRange mediumOffset = new() { offsetRange = 12, deviationFromOrigin = 5};
+    public TemperatureOffsetRange hardOffset = new() { offsetRange = 7, deviationFromOrigin = 1};
     [SerializeField] private string[] locations;
     private PopText questionDisplay;
     private float temperature;
@@ -36,7 +43,7 @@ public class WeatherManager : Minigame
         base.GameFinish(winner);
     }
 
-    private const string key = "1c581fce429c45a59a9121614250109"; // stolen from Charlie or was it?!?!+
+    private const string key = "1c581fce429c45a59a9121614250109"; // stolen from Charlie or was it?!?!+ (it was)
 
     [System.Serializable]
     public class Condition
@@ -119,10 +126,14 @@ public class WeatherManager : Minigame
                 temperature = Mathf.RoundToInt((float)weather.current.temp_c * 100) / 100;
                 Debug.Log($"{weather.location.name} is {temperature}°C"); // FOR DEBUGGING
 
-                // Get the fake temperature
-                int difference = 0;
-                while (difference == 0) difference = Random.Range(-fakeTemperatureRange, fakeTemperatureRange);
-                fakeTemperature = temperature + difference;
+                int offset = 0;
+                TemperatureOffsetRange difficultyRange = GetTemperatureOffsetRange(); // Get range attributes based on GameSetting difficulty
+
+                // Regenerate offset if it's not within range
+                do { offset = Random.Range(-difficultyRange.offsetRange, difficultyRange.offsetRange); }
+                while (offset >= -difficultyRange.deviationFromOrigin && offset <= difficultyRange.deviationFromOrigin);
+
+                fakeTemperature = temperature + offset;
 
                 // Create Question and Buttons
                 query = $"{fakeTemperature}°C in {location}";
@@ -133,5 +144,16 @@ public class WeatherManager : Minigame
         }
 
         yield break;
+    }
+    
+    private TemperatureOffsetRange GetTemperatureOffsetRange()
+    {
+        return GameController.gameSettings.roundSettings.difficulty switch
+        {
+            GameSettings.Difficulties.easy => easyOffset,
+            GameSettings.Difficulties.medium => mediumOffset,
+            GameSettings.Difficulties.hard => hardOffset,
+            _ => mediumOffset,
+        };
     }
 }
