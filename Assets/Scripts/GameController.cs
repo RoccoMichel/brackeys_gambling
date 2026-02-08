@@ -2,17 +2,19 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
+    [Header("Some variables have been moved to GameSettings")]
     public GameSettings gameSettings;
-    public bool inGame;
+    [Space(20)] public bool inGame;
     private int previousGame;
     internal Minigame currentGame;
     public GameObject[] games;
     public CanvasManager canvas;
-    public List<Opponent> OpponentList = new();
+    internal List<Opponent> opponentList;
 
     [Header("Player Values")]
     [Tooltip("Start Balance is controlled by GameSettings!")]
@@ -50,7 +52,7 @@ public class GameController : MonoBehaviour
         if (gameSettings == null) Debug.LogError("No GameSettings assigned to the GameController!");
         Instance = this;
 
-        balance = gameSettings.roundSettings.playerStartMoney;
+        balance = gameSettings.roundSettings.startBalance;
         bet = balance/2;
 
     }
@@ -71,7 +73,8 @@ public class GameController : MonoBehaviour
         decrease100 = InputSystem.actions.FindAction("decrease100");
         min = InputSystem.actions.FindAction("min");
         max = InputSystem.actions.FindAction("max");
-        
+
+        GenerateOpponents();
         NewGame();
     }
 
@@ -98,7 +101,9 @@ public class GameController : MonoBehaviour
     {
         if (gamesPlayed >= gameSettings.roundSettings.gamesPerRound)
         {
-            currentGame = Instantiate((GameObject)Resources.Load("Games/Double or Nothing")).GetComponent<Minigame>();
+            if (gameSettings.roundSettings.doubleOrNothingQuery)
+                currentGame = Instantiate((GameObject)Resources.Load("Games/Double or Nothing")).GetComponent<Minigame>();
+            else Instantiate((GameObject)Resources.Load("Podium"));
             return;            
         }
 
@@ -109,6 +114,9 @@ public class GameController : MonoBehaviour
             if (games.Length == 1) break;
         }
         currentGame = Instantiate(games[nextGame]).GetComponent<Minigame>();
+
+        canvas.ShowBetMenu();
+        canvas.ShowOpponents();
     }
     public void StartGame()
     {
@@ -117,9 +125,12 @@ public class GameController : MonoBehaviour
             Debug.LogWarning("Player bet is zero or below!");
             return;
         }
-       
+
+        foreach (Opponent op in opponentList) op.ChooseBet();
 
         inGame = true;
+        canvas.HideBetMenu();
+        canvas.HideOpponents();
         canvas.ClearButtons();
         currentGame.GameStart();
     }
@@ -130,7 +141,7 @@ public class GameController : MonoBehaviour
         inGame = false;
         gamesPlayed++;
 
-        foreach (Opponent o in OpponentList)
+        foreach (Opponent o in opponentList)
         {
             if (o.choice == result) o.Win();
             else o.Lose();
@@ -148,7 +159,20 @@ public class GameController : MonoBehaviour
             canvas.SetBalanceColor(Color.red);
         }
 
+        StartCoroutine(Intermission());
+    }
+
+    public IEnumerator Intermission()
+    {
+        canvas.ShowBetMenu();
+        canvas.ShowOpponents();
+
+        yield return new WaitForSeconds(2);
+
+        Instantiate((GameObject)Resources.Load("Spoiler"));
         NewGame();
+
+        yield break;
     }
 
     public void IncreaseBet(int amount)
@@ -160,11 +184,27 @@ public class GameController : MonoBehaviour
     }
 
     // Opponent Related - Rocco
-    public void GenerateOpponents(int count)
+    public void BringBackOutOpponents()
     {
-        for (int i = 0; i < count; i++)
+        foreach (Opponent op in opponentList)
         {
-            OpponentList.Add(Instantiate((GameObject)Resources.Load("Opponent"), canvas.opponentParent).GetComponent<Opponent>());
+            if (op.balance <= 0) op.ResetBalance();
         }
     }
+
+    public void GenerateOpponents(int count)
+    {
+        if (opponentList != null)
+        {
+            foreach (Opponent op in opponentList) Destroy(op.gameObject);
+        }
+
+        opponentList = new();
+        for (int i = 0; i < count; i++)
+        {
+            opponentList.Add(Instantiate((GameObject)Resources.Load("Opponent"), canvas.opponentParent).GetComponent<Opponent>());
+        }
+    }
+    /// <summary> Generates opponents using the configured opponent count from GameSettings /summary>
+    public void GenerateOpponents() => GenerateOpponents(gameSettings.roundSettings.opponentCount);
 }

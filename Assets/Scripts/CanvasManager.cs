@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class CanvasManager : MonoBehaviour
 {
+    [SerializeField] private Animator betMenuController;
     [SerializeField] private TMP_Text balanceDisplay;
     [SerializeField] private TMP_Text betDisplay;
     [SerializeField] private Transform buttonParent;
-    [SerializeField] public Transform opponentParent;
-    public List<GameObject> Buttons = new();
+    public Transform opponentParent;
+    private List<GameObject> Buttons = new();
     private GameObject popText;
 
     private void FixedUpdate()
@@ -71,5 +72,47 @@ public class CanvasManager : MonoBehaviour
     {
         foreach (GameObject gameObject in Buttons) { Destroy(gameObject); }
         Buttons.Clear();
+    }
+
+    private bool betHidden;
+    public void HideBetMenu()
+    {
+        if (betHidden) return;
+
+        betHidden = true;
+        betMenuController.Rebind();
+        betMenuController.Update(0f);
+        betMenuController.Play("fly-out");
+    }
+    public void ShowBetMenu()
+    {
+        if (!betHidden) return;
+
+        betHidden = false;
+        betMenuController.Rebind();
+        betMenuController.Update(0f);
+        betMenuController.Play("fly-in");
+    }
+    private bool opsHidden;
+    private Animator opsController;
+    public void HideOpponents()
+    {
+        if (opsHidden) return;
+
+        if (opsController == null) opsController = opponentParent.GetComponent<Animator>();
+        opsHidden = true;
+        opsController.Rebind();
+        opsController.Update(0f);
+        opsController.Play("slide-out");
+    }
+    public void ShowOpponents()
+    {
+        if (!opsHidden) return;
+
+        if (opsController == null) opsController = opponentParent.GetComponent<Animator>();
+        opsHidden = false;
+        opsController.Rebind();
+        opsController.Update(0f);
+        opsController.Play("slide-in");
     }
 }

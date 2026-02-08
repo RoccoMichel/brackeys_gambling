@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0ec6ffbb16d66542a78df5282629cdd, type: 3}
-  m_Name: GameSettings
+  m_Name: Leaderboard Settings
   m_EditorClassIdentifier: 
   roundSettings:
-    difficulty: 0
-    opponentCount: 8
-    opponentBettingRangeFromPlayer: 25
-    gamesPerRound: 2
-    startBalance: 1000
-    doubleOrNothingQuery: 1
+    difficulty: 2
+    opponentCount: 0
+    opponentBettingRangeFromPlayer: 0
+    gamesPerRound: 0
+    startBalance: 0
+    doubleOrNothingQuery: 0
   saveSettings:
     savingMode: 0
     fetchScoresURI: 
     saveScoresURI: 
     JSONPath: /SaveJSON.LiveLoveGamble
   moreSettings:
-    showPodium: 1
+    showPodium: 0
     showLeaderboard: 1
     playerProfile: {fileID: 21300000, guid: 53be9188e1afb56478d988c07d1b68ee, type: 3}
     opponentProfiles:
@@ -36,7 +36,4 @@ MonoBehaviour:
     - {fileID: -8250237110703883875, guid: ace69b07391410147a94fee248272679, type: 3}
     - {fileID: -7722714391916365513, guid: ace69b07391410147a94fee248272679, type: 3}
     - {fileID: -6796361900335939033, guid: ace69b07391410147a94fee248272679, type: 3}
-  devNotes: '*API saving mode not implemented yet!
-
-    *When updating JSON Path
-    also update Leaderboard Settings in ''Scenes'' Folder!'
+  devNotes: Skips everything except the leaderboard

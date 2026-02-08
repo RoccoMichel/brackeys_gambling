@@ -11,9 +11,12 @@ public class GameSettings : ScriptableObject
     {
         [Tooltip("Affects: Trivia, Weather")]
         public Difficulties difficulty;
-        public int enemyCount;
+        public int opponentCount;
+        [Tooltip("In Percent")]
+        public int opponentBettingRangeFromPlayer;
         public int gamesPerRound;
-        public int playerStartMoney;
+        public int startBalance;
+        public bool doubleOrNothingQuery;
     }
     [System.Serializable]
     public struct SaveSettings
@@ -25,16 +28,27 @@ public class GameSettings : ScriptableObject
         [Space(30)]
         public string JSONPath;
     }
+    [System.Serializable]
+    public struct MoreSettings
+    {
+        public bool showPodium;
+        public bool showLeaderboard;
+        public Sprite playerProfile;
+        public Sprite[] opponentProfiles;
+    }
 
     // Instances with default values
     [Space(10)]
     public RoundSettings roundSettings = new()
     {
         difficulty = Difficulties.easy,
-        enemyCount = 6,
+        opponentCount = 6,
+        opponentBettingRangeFromPlayer = 25,
         gamesPerRound = 10,
-        playerStartMoney = 1000,
+        startBalance = 1000,
+        doubleOrNothingQuery = true
     };
     [Space(20)] public SaveSettings saveSettings = new() { JSONPath="/SaveJSON.LiveLoveGamble"};
+    [Space(20)] public MoreSettings moreSettings = new();
     [Space(20), TextArea] public string devNotes;
 }
