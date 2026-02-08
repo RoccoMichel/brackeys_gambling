@@ -1,2 +1,6 @@
 DEADLINE: 9-2-2026
-*Break between minigames to show what happend
+*Make Slinko bouncing better
+*Comment code
+*Make it better
+*Finalize Itch Page
+*Fix Web-Build

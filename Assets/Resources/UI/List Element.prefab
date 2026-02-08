@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   standardColor: {r: 0.2784314, g: 0.2784314, b: 0.2784314, a: 1}
-  highlightColor: {r: 0.46666667, g: 0.46666667, b: 0.46666667, a: 1}
+  highlightColor: {r: 0.5622641, g: 0.5622641, b: 0.5622641, a: 1}
   background: {fileID: 7529626300399016443}
   rankDisplay: {fileID: 8663270844590753433}
   scoreDisplay: {fileID: 5605522269117638127}

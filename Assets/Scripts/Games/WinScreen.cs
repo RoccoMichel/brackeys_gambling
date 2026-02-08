@@ -14,7 +14,7 @@ public class WinScreen : MonoBehaviour
 
     // local variables
     private GameSettings gameSettings;
-    private SaveData.GameData newData;
+    private SaveData.GameData newData = new();
     [HideInInspector] public SaveData currentSave = new();
     private string path;
     private int playerRank = 1;
@@ -23,7 +23,7 @@ public class WinScreen : MonoBehaviour
     private void Start()
     {
         gameSettings = GameController.Instance.gameSettings;
-        includePlayer = GameController.Instance.balance == 0;
+        includePlayer = !(GameController.Instance.balance == 0);
         GameController.Instance.canvas.HideBetMenu();
         
         if (gameSettings.moreSettings.showPodium) SetUpPodium(); // Podium has a button for ContinueWithSaving
@@ -98,7 +98,7 @@ public class WinScreen : MonoBehaviour
         int playerRank = currentSave.data.IndexOf(newData);
         int highlightIndex = playerRank;
 
-        for(int i = 0; i < 11; i++)
+        for(int i = 0; i < Mathf.Clamp(currentSave.data.Count, 1, 11); i++)
         {
             if (playerRank > 10 && i == 10)
             {
@@ -110,9 +110,9 @@ public class WinScreen : MonoBehaviour
             leaderboardData[i] = currentSave.data[i];
         }
 
-        Instantiate((GameObject)Resources.Load("UI/Leaderboard"), GameController.Instance.canvas.transform)
-                .GetComponent<Leaderboard>().InstantiateList(leaderboardData, highlightIndex, playerRank);
-        
+        Leaderboard board = Instantiate((GameObject)Resources.Load("UI/Leaderboard"), GameController.Instance.canvas.transform).GetComponent<Leaderboard>();
+        if (includePlayer) board.InstantiateList(leaderboardData, highlightIndex, playerRank);
+        else board.InstantiateList(leaderboardData);
     }
     private void FetchFromJson()
     {
@@ -130,14 +130,6 @@ public class WinScreen : MonoBehaviour
     private void SaveAsJson()
     {
         if (!includePlayer) return; // Do not save current player!
-
-        DateTime today = DateTime.Now;
-        SaveData.GameData newData = new()
-        {
-            score = GameController.Instance.balance,
-            rank = 4,
-            date = today.Date.ToString("d")
-        };
 
         currentSave.data.Add(newData);
         currentSave.data.Sort((x, y) => y.score.CompareTo(x.score));
