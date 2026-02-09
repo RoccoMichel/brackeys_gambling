@@ -35,7 +35,7 @@ public class Leaderboard : MonoBehaviour
             listElementsReference[i] = Instantiate(listElement, listParent);
 
             if (i != highlightIndex) listElementsReference[i].GetComponent<ListElement>().SetValues(data[i], i == highlightIndex, i + 1);
-            else listElementsReference[i].GetComponent<ListElement>().SetValues(data[i], i == highlightIndex, playerRank);
+            else listElementsReference[i].GetComponent<ListElement>().SetValues(data[i], i == highlightIndex, playerRank + 1);
         }
     }
 }
