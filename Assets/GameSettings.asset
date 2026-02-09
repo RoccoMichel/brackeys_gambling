@@ -16,7 +16,7 @@ MonoBehaviour:
     difficulty: 0
     opponentCount: 8
     opponentBettingRangeFromPlayer: 15
-    gamesPerRound: 2
+    gamesPerRound: 5
     startBalance: 1000
     doubleOrNothingQuery: 1
   saveSettings:

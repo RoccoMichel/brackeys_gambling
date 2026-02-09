@@ -23,6 +23,7 @@ public class SlinkoManager : Minigame
         int spawnX = Random.Range(-6, 6);
         snail.transform.position = new Vector2(spawnX, 5);
         snail.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+       
     }
 
     
