@@ -30,8 +30,6 @@ public class SnailManager : Minigame
         {
             snail.StartMoving();
         }
-
-        GetComponent<AudioSource>().Play();
     }
 
     // Avslutar rejset - Felix
