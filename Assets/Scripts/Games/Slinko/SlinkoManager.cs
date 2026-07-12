@@ -25,17 +25,6 @@ public class SlinkoManager : Minigame
         snail.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
        
     }
-
-    
-    private void Update()
-    {
-        //For testing - Felix
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RandomizeSpawn();           
-        }
-    }
-
     // vÄRY COOL start so it like studsa runt - Felix
     private IEnumerator CinematicStart()
     {

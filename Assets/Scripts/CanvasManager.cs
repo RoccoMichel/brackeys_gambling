@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
     [SerializeField] private Animator betMenuController;
     [SerializeField] private TMP_Text balanceDisplay;
     [SerializeField] private TMP_Text betDisplay;
+    [SerializeField] private Slider betSlider;
     [SerializeField] private Transform buttonParent;
     public Transform opponentParent;
     private List<GameObject> Buttons = new();
@@ -16,8 +18,15 @@ public class CanvasManager : MonoBehaviour
     {
         betDisplay.text = $"Bet: ${GameController.Instance.bet}";
         balanceDisplay.text = $"${GameController.Instance.balance}";
+        betSlider.maxValue = GameController.Instance.balance;
+        betSlider.value = Mathf.Clamp(betSlider.value, 1, betSlider.maxValue);
 
         balanceDisplay.color = Color.Lerp(balanceDisplay.color, Color.white, 0.03f);
+    }
+
+    private void LateUpdate()
+    {
+        betSlider.value = GameController.Instance.bet;
     }
 
     public void InstantiateButtons(int amount, string message, bool showButtonNumber)

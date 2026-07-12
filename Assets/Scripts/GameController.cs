@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -94,6 +95,13 @@ public class GameController : MonoBehaviour
         if (max.WasPressedThisFrame()) bet = balance;
 
         bet = Mathf.Clamp(bet, 1, balance);
+    }
+
+    public void BetThroughSlider(Slider slider)
+    {
+        if (inGame) return;
+
+        bet = Mathf.CeilToInt(slider.value);
     }
 
     // Startar nytt spel och väljer ut ett slumpmässigt minigame - Felix
@@ -205,6 +213,6 @@ public class GameController : MonoBehaviour
             opponentList.Add(Instantiate((GameObject)Resources.Load("Opponent"), canvas.opponentParent).GetComponent<Opponent>());
         }
     }
-    /// <summary> Generates opponents using the configured opponent count from GameSettings /summary>
+    /// <summary> Generates opponents using the configured opponent count from GameSettings </summary>
     public void GenerateOpponents() => GenerateOpponents(gameSettings.roundSettings.opponentCount);
 }
